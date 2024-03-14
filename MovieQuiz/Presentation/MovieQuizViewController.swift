@@ -7,22 +7,6 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var counterLabel: UILabel!
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
-    
-    @IBAction private func yesButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = true
-            
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
-    }
-    @IBAction private func noButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = false
-            
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
-    }
-    
         
     private let questions: [QuizQuestion] = [
         QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
@@ -44,7 +28,19 @@ final class MovieQuizViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
           return .lightContent
     }
-
+    
+    @IBAction private func yesButtonClicked(_ sender: Any) {
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = true
+            
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    @IBAction private func noButtonClicked(_ sender: Any) {
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = false
+            
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
     //метод конвертации, мы берем моковые данные и преобразуем во вью вопроса
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
@@ -53,6 +49,7 @@ final class MovieQuizViewController: UIViewController {
             questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
         return questionStep
     }
+    
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -61,6 +58,7 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        imageView.layer.cornerRadius = 10
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
            // код, который мы хотим вызвать через 1 секунду
@@ -75,6 +73,7 @@ final class MovieQuizViewController: UIViewController {
     //метод показа show
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
+        textLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
@@ -132,10 +131,3 @@ final class MovieQuizViewController: UIViewController {
     struct QuizAnswer {
         let result: Bool
     }
-
-//Структура, которая полностью описывает все данные, которые надо отобразить на экране
-//    struct ViewModel {
-    //        let image: UIImage
-    //        let question: String
-    //        let questionNumber: String
-    //    }
