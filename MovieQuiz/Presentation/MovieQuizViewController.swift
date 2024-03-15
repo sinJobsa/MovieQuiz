@@ -26,7 +26,7 @@ final class MovieQuizViewController: UIViewController {
     }
     //Я делаю статус бар белым, но нижний вью контроллер все равно серый, весь интернет перерыл, как его сделать белым?
     override var preferredStatusBarStyle: UIStatusBarStyle {
-          return .lightContent
+        return .lightContent
     }
     
     @IBAction private func yesButtonClicked(_ sender: Any) {
@@ -58,7 +58,7 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 20
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
            // код, который мы хотим вызвать через 1 секунду
